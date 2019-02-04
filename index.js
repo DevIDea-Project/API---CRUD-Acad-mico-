@@ -64,13 +64,13 @@ server.post('/create', function (req, res, next){
 });
 
 // Consultar pelo ID.
-server.get('/show/:idFunc', function (req, res, next) {
+server.get('/show/:id', function (req, res, next) {
   
-  const { idFunc } = req.params;
+  const { id } = req.params;
   
   knex('funcionario')
     
-    .where('idFunc', idFunc)
+    .where('id', id)
     
     .first()
     
@@ -86,11 +86,11 @@ server.get('/show/:idFunc', function (req, res, next) {
 // Fazer Update pelo ID
 server.put('/update/:id', function (req, res, next) {
   
-  const { idFunc } = req.params;
+  const { id } = req.params;
   
   knex('funcionario')
     
-    .where('idFunc', idFunc)
+    .where('id', id)
     
     .update(req.body)
     
@@ -104,13 +104,13 @@ server.put('/update/:id', function (req, res, next) {
 });
 
 //Delete Pelo ID.
-server.del('/delete/:idFunc', function (req, res, next) {
+server.del('/delete/:id', function (req, res, next) {
 
-  const { idFunc } = req.params;
+  const { id } = req.params;
   
   knex('funcionario')
     
-    .where('idFunc', idFunc)
+    .where('id', id)
     
     .delete()
     

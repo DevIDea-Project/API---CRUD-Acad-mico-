@@ -53,19 +53,30 @@
                 const texto = document.querySelector('#texto');
 
                 botao.addEventListener('click', create);
+
+                lista.addEventListener('click', del);
                 
                 read();
 
              };
 
-            function templateLi(idFunc, nomeFunc){
+            function templateLi(id, nomeFunc){
                 
                 return `
                   
-                    <li class="list-group-item">${idFunc+" "+nomeFunc}</li>
+                    <li class="list-group-item">${id+" "+nomeFunc}
+                    
+                        <i class="btn btn-danger delete fa fa-trash"
+                        
+                          style="float: right; margin-left: 5px;"
+                          data-id="${id}";
+
+                        ></i>    
+                    </li>    
+                   
+                  
                 
-                
-                `
+                `;
             }
 
             function read(){
@@ -82,7 +93,7 @@
                          
                             response.data.forEach(element => {
                         
-                            lista.innerHTML += templateLi(element.idFunc, element.nomeFunc);
+                            lista.innerHTML += templateLi(element.id, element.nomeFunc);
                         
                         });
                     })
@@ -123,7 +134,32 @@
 
             }
 
-            function del(){
+            function del(element){
+            
+                console.log(element);
+
+                if(element.target.classList.contains('delete')){
+
+                    //id do elemento a excluir?
+                    //debugger
+                    const id = element.target.dataset.id;
+
+                    axios.delete(`/delete/${id}`)
+                        
+                        .then(function(response){
+
+                            if(response.status = 200){
+                                lista.removeChild(element.path[1]);
+                            }
+                         
+                        })
+                        .catch(function(error){
+                                console.log(error);
+                        });
+
+
+                }
+
 
             }
          </script>   
