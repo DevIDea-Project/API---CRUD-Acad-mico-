@@ -84,7 +84,7 @@ server.get('/show/:id', function (req, res, next) {
 });
 
 // Fazer Update pelo ID
-server.put('/update/:id', function (req, res, next) {
+server.put('/update/:id',  (req, res, next) => {
   
   const { id } = req.params;
   
@@ -100,7 +100,7 @@ server.put('/update/:id', function (req, res, next) {
     
       res.send('Dados atualizados!');
   
-  }, next);
+  }, next)
 });
 
 //Delete Pelo ID.
