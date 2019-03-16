@@ -1,6 +1,9 @@
-
 const restify = require('restify'); // Faço a requisição do framework restify.
 const errs = require('restify-errors'); // Faço a requisiçao do modulo de erros.
+
+/* Poderia ter criado um servidor desta forma, porém daria mais trabalho em 
+ definir as rotas manualmente, sem falar que se tivessemos centenas de rotas
+=>  const http = require('http'); Por isso optamos por criar a rota com o Framework Restify*/
 
 // Criando o servidor restify e passando os paramentros.
 const server = restify.createServer({
@@ -8,7 +11,7 @@ const server = restify.createServer({
   version: '1.0.0'
 });
 
-//Paramentros para o Banco de Dados.
+/** Usei o framework para conectar ao banco de dados.*/
 const knex = require('knex')({
   client: 'mysql',
   connection: {
@@ -23,11 +26,14 @@ server.use(restify.plugins.queryParser()); // query para o banco de Dados.
 server.use(restify.plugins.bodyParser()); // Para a pagina HTML
 
 // Passando a porta que ele vai escutar, porta 8080. Depois uma função passando o NOME do servidor e a Url
-server.listen(8080, function () {
+server.listen(8080,  () => {
   console.log('%s listening at %s', server.name, server.url);
 });
 
 
+
+
+// Daqui pra baixo são criando as rotas de Acesso.
 
 server.get('/', restify.plugins.serveStatic({
    
@@ -36,8 +42,6 @@ server.get('/', restify.plugins.serveStatic({
      file: 'index.html'
 
 }));
-
-
 
 //Function para Select.
 server.get('/read',  (req, res, next) => {
@@ -49,7 +53,7 @@ server.get('/read',  (req, res, next) => {
 });
 
 // Insert (inserir um dado novo na tabela).
-server.post('/create', function (req, res, next){
+server.post('/create',  (req, res, next) => {
  
   knex('funcionario')
     
@@ -64,7 +68,7 @@ server.post('/create', function (req, res, next){
 });
 
 // Consultar pelo ID.
-server.get('/show/:id', function (req, res, next) {
+server.get('/show/:id',  (req, res, next) => {
   
   const { id } = req.params;
   
@@ -104,7 +108,7 @@ server.put('/update/:id',  (req, res, next) => {
 });
 
 //Delete Pelo ID.
-server.del('/delete/:id', function (req, res, next) {
+server.del('/delete/:id', (req, res, next) => {
 
   const { id } = req.params;
   
